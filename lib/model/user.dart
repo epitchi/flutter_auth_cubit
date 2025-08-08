@@ -37,10 +37,10 @@ class User extends Equatable {
       'email': email,
       'name': name,
       'username': username,
-      'created': created,
-      'updated': updated,
-      'metadata': metadata
-    };
+      'created': created.toIso8601String(),
+      'updated': updated.toIso8601String(),
+      'metadata': metadata.toJson()
+      };
   }
 
   @override
@@ -62,6 +62,11 @@ class UserMetadata extends Equatable {
       demo: json['demo']
     );
   }
+
+  Map<String, dynamic> toJson() => {  
+    "reference": reference,
+    "demo": demo 
+  };
 
   @Object()
   List<Object?> get props => [reference, demo];
