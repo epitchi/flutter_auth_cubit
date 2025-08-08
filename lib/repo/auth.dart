@@ -4,14 +4,14 @@ import 'package:flutter_auth_cubit/model/auth.dart';
 import 'package:flutter_auth_cubit/model/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class AuthRepository {
+class AuthRepo {
   static const String _tokenKey = 'auth_token';
   static const String _userKey = 'user_data';
 
-  Future<User> login(String email, String password) async {
+  Future<Auth> login(String email, String password) async {
     
     try {
-      final data = await pb.collection('user').authWithPassword(email, password);
+      final data = await pb.collection('users').authWithPassword(email, password);
       
       if (data.token.isEmpty) {
         throw const AuthException(message: 'Auth failed: no token received');
@@ -25,9 +25,9 @@ class AuthRepository {
         _saveToken(data.token),
         _saveUser(User.fromJson(data.record.toJson()))
       ]);
-      return User.fromJson(data.record.toJson());
+      return Auth.fromJson(data.toJson());
     } catch (err) {
-      throw AuthException(message: 'Invalid credential');
+      throw AuthException(message: 'Invalid credential + ${err.toString()}');
     }
 
   }

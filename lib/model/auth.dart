@@ -12,7 +12,7 @@ class Auth extends Equatable {
 
   factory Auth.fromJson(Map<String, dynamic> json) {
     return Auth(
-      token: json['record'],
+      token: json['token'],
       record: User.fromJson(json['record'])
     );
   }
